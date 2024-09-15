@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-streams-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-streams-app
+  template:
+    metadata:
+      labels:
+        app: event-streams-app
+    spec:
+      containers:
+      - name: event-streams-container
+        image: <your-image>
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config/tokenize-config
+          subPath: tokenize-config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: tokenize-config
